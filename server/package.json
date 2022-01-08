@@ -1,0 +1,29 @@
+{
+  "name": "srs-private-sale-platform",
+  "version": "1.0.0",
+  "description": "The platform provides both individual user functionality and provides ability for the team to create and manage private sale projects.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Dulanjana Bandara",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^5.13.14",
+    "morgan": "^1.10.0",
+    "slugify": "^1.6.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1"
+  }
+}
