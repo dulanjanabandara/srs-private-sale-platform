@@ -4,11 +4,13 @@
   "description": "The platform provides both individual user functionality and provides ability for the team to create and manage private sale projects.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "author": "Dulanjana Bandara",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "mongoose": "^5.13.14",
     "morgan": "^1.10.0",

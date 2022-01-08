@@ -4,8 +4,7 @@ const projectController = require('../controllers/projectController');
 const router = express.Router();
 
 // Middleware to check whether the id parameter is valid
-router.param('id', projectController.checkID);
-
+// router.param('id', projectController.checkID);
 // Middleware to check the request body
 
 router
