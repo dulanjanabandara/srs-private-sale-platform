@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+// const validator = require('validator');
 
 const projectSchema = new mongoose.Schema(
   {
@@ -26,10 +27,18 @@ const projectSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'A project must have an allocation'],
     },
-    fee: { type: Number, required: [true, 'A project must have a fee'] },
+    fee: {
+      type: Number,
+      required: [true, 'A project must have a fee'],
+      validate: {
+        validator: function (value) {
+          return value < this.allocation; // this only points to current document when we are creating a NEW document! So this function is not going to work on update
+        },
+        message: 'Fee rate ({VALUE}) must be lower than the Allocation price',
+      },
+    },
     multiTokenDeal: {
       type: Boolean,
-      default: false,
       required: [
         true,
         'Please select whether the projects is multi token deal or not',
@@ -76,11 +85,11 @@ const projectSchema = new mongoose.Schema(
 );
 
 // Virtual properties - But not relevant for project model, We cannot use virtual properties in a query
-projectSchema.virtual('contributionAllocation').get(function () {
-  return (this.allocation * this.fee) / 100;
-});
+// projectSchema.virtual('contributionAllocation').get(function () {
+//   return (this.allocation * this.fee) / 100;
+// });
 
-// DOCUMENT MIDDLEWARE: runs before .save() and .create()
+// DOCUMENT MIDDLEWARE: runs before .save() and .create(). Not runs for .update()
 projectSchema.pre('save', function (next) {
   this.slug = slugify(this.name, {
     lower: true,
