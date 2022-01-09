@@ -1,6 +1,7 @@
 const Project = require('../models/projectModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
   // EXECUTE QUERY
@@ -11,10 +12,6 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
     .paginate();
   const projects = await features.query;
 
-  console.log(features);
-
-  // const projects = await Project.find();
-
   res.status(200).json({
     status: 'success',
     results: projects.length,
@@ -24,6 +21,10 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
 
 exports.getProject = catchAsync(async (req, res, next) => {
   const project = await Project.findById(req.params.id);
+
+  if (!project) {
+    return next(new AppError('No project found with that ID', 404));
+  }
 
   res.status(200).json({
     status: 'success',
@@ -47,6 +48,11 @@ exports.updateProject = catchAsync(async (req, res, next) => {
     new: true, // new updated document will be returned
     runValidators: true,
   });
+
+  if (!project) {
+    return next(new AppError('No project found with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -56,7 +62,13 @@ exports.updateProject = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
-  await Project.findByIdAndUpdate(req.params.id, { isDeleted: true });
+  const project = await Project.findByIdAndUpdate(req.params.id, {
+    isDeleted: true,
+  });
+
+  if (!project) {
+    return next(new AppError('No project found with that ID', 404));
+  }
 
   res.status(204).json({
     status: 'success',
