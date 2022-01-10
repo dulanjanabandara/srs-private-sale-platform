@@ -66,12 +66,11 @@ const projectSchema = new mongoose.Schema(
     vestingSchedule: { type: String, trim: true },
     coverImage: {
       type: String,
-      // required: [true, 'A tour must have a cover image'],
+      // required: [true, 'A project must have a cover image']
     },
     createdAt: { type: Date, default: Date.now(), select: false },
-    startDate: { type: Date, default: Date.now() },
-    isDeleted: { type: Boolean, default: false },
-    deletedAt: { type: Date, default: Date.now(), select: false },
+    startDate: { type: Date },
+    isDeleted: { type: Boolean, default: false, select: false },
     slug: String,
     secretProject: {
       type: Boolean,
