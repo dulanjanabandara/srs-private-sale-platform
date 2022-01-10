@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-// const slugify = require('slugify');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: [true, 'Please tell us your username!'] },
@@ -38,6 +38,18 @@ const userSchema = new mongoose.Schema({
   //   passwordResetToken: { type: String },
   //   passwordResetExpiresAt: { type: Date },
   //   isDeleted: { type: Boolean, default: false, select: false },
+});
+
+userSchema.pre('save', async function (next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 14);
+
+  // Delete passwordConfirm field
+  this.passwordConfirm = undefined; // this field does not store values in the database
+  next();
 });
 
 const User = mongoose.model('User', userSchema);
