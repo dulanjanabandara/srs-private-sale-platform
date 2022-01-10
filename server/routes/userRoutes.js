@@ -8,7 +8,7 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
 router.post('/forgotPassword', authController.forgotPassword);
-router.post('/resetPassword', authController.resetPassword);
+router.patch('/resetPassword/:token', authController.resetPassword);
 
 // Keep these routes for some uses of the System Administrator
 router
