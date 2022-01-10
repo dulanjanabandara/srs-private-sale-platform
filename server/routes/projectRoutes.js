@@ -17,6 +17,15 @@ router
   .route('/:id')
   .get(projectController.getProject)
   .patch(projectController.updateProject)
-  .delete(projectController.deleteProject);
+  // .patch(
+  //   authController.protect,
+  //   authController.restrictTo('admin'),
+  //   projectController.deleteProject
+  // );
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin'),
+    projectController.deleteProject
+  );
 
 module.exports = router;
