@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please tell us your discord name!'],
   },
   //   role: { type: String, enum: ['user', 'admin'], default: 'user' },
-  profilePhoto: { type: String, default: 'default.jpg' },
+  //   profilePhoto: { type: String, default: 'default.jpg' },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
