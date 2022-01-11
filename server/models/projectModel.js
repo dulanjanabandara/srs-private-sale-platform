@@ -70,7 +70,7 @@ const projectSchema = new mongoose.Schema(
     },
     createdAt: { type: Date, default: Date.now(), select: false },
     startDate: { type: Date },
-    isDeleted: { type: Boolean, default: false, select: false },
+    active: { type: Boolean, default: false, select: false },
     slug: String,
     secretProject: {
       type: Boolean,
