@@ -63,7 +63,7 @@ exports.updateProject = catchAsync(async (req, res, next) => {
 
 exports.deleteProject = catchAsync(async (req, res, next) => {
   const project = await Project.findByIdAndUpdate(req.params.id, {
-    isDeleted: true,
+    active: false,
   });
 
   if (!project) {

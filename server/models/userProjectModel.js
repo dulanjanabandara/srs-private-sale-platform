@@ -38,6 +38,17 @@ const userProjectSchema = new mongoose.Schema({
   },
 });
 
+userProjectSchema.pre(/^find/, function () {
+  this.populate({
+    path: 'user',
+    select: 'username email discordName profilePhoto',
+  }).populate({
+    path: 'project',
+    select:
+      'name websiteLink twitterLink pitchDeckLink documentsLink allocation fee status vestingSchedule',
+  });
+});
+
 userProjectSchema.methods.calculateContributionAmount = function () {
   this.contributionAmount =
     this.amount - (this.amount * this.project.fee) / 100;

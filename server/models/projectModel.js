@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const slugify = require('slugify');
+// const slugify = require('slugify');
 // const validator = require('validator');
 
 const projectSchema = new mongoose.Schema(
@@ -15,14 +15,14 @@ const projectSchema = new mongoose.Schema(
     twitterLink: { type: String },
     pitchDeckLink: { type: String },
     documentsLink: { type: String },
-    blockchain: {
-      type: String,
-      required: [true, 'A project must have a blockchain'],
-      enum: {
-        values: ['SOL', 'ETH', 'BSC', 'Other'],
-        message: 'Select a valid blockchain',
-      },
-    },
+    // blockchain: {
+    //   type: String,
+    //   required: [true, 'A project must have a blockchain'],
+    //   enum: {
+    //     values: ['SOL', 'ETH', 'BSC', 'Other'],
+    //     message: 'Select a valid blockchain',
+    //   },
+    // },
     allocation: {
       type: Number,
       required: [true, 'A project must have an allocation'],
@@ -37,6 +37,10 @@ const projectSchema = new mongoose.Schema(
         message: 'Fee rate ({VALUE}) must be lower than the Allocation price',
       },
     },
+    allocationPerNft: { type: Number },
+    minContributionPerNft: { type: Number },
+    maxContributionPerNft: { type: Number },
+    maxContributionPerWallet: { type: Number },
     multiTokenDeal: {
       type: Boolean,
       required: [
@@ -47,6 +51,8 @@ const projectSchema = new mongoose.Schema(
     token1Price: { type: Number, default: null },
     token2Price: { type: Number, default: null },
     pricePerToken: { type: Number, default: null },
+    noOfTotalToken: { type: Number },
+    noOfDistributedTokens: { type: Number },
     status: {
       type: String,
       required: [true, 'A project must have a status'],
@@ -70,7 +76,7 @@ const projectSchema = new mongoose.Schema(
     },
     createdAt: { type: Date, default: Date.now(), select: false },
     startDate: { type: Date },
-    active: { type: Boolean, default: false, select: false },
+    active: { type: Boolean, default: true, select: false },
 
     // slug: String,
     // secretProject: {
@@ -90,18 +96,18 @@ const projectSchema = new mongoose.Schema(
 // });
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create(). Not runs for .update()
-projectSchema.pre('save', function (next) {
-  this.slug = slugify(this.name, {
-    lower: true,
-  });
-  next();
-});
+// projectSchema.pre('save', function (next) {
+//   this.slug = slugify(this.name, {
+//     lower: true,
+//   });
+//   next();
+// });
 
 // QUERY MIDDLEWARE
-projectSchema.pre(/^find/, function (next) {
-  this.find({ secretProject: { $ne: true }, isDeleted: false });
-  next();
-});
+// projectSchema.pre(/^find/, function (next) {
+//   this.find({ secretProject: { $ne: true }, isDeleted: false });
+//   next();
+// });
 
 const Project = mongoose.model('Project', projectSchema);
 
