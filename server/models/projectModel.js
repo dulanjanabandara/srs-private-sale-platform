@@ -72,10 +72,10 @@ const projectSchema = new mongoose.Schema(
     startDate: { type: Date },
     active: { type: Boolean, default: false, select: false },
     slug: String,
-    secretProject: {
-      type: Boolean,
-      default: false,
-    },
+    // secretProject: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   {
     toJSON: { virtuals: true },
