@@ -20,7 +20,7 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
 });
 
 exports.getProject = catchAsync(async (req, res, next) => {
-  const project = await Project.findById(req.params.id);
+  const project = await Project.findById(req.params.id).populate('users');
 
   if (!project) {
     return next(new AppError('No project found with that ID', 404));

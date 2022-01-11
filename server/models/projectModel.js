@@ -95,6 +95,13 @@ const projectSchema = new mongoose.Schema(
 //   return (this.allocation * this.fee) / 100;
 // });
 
+// Virtual Populate
+// projectSchema.virtual('users', {
+//   ref: 'UserProject',
+//   foreignField: 'project',
+//   localField: '_id',
+// });
+
 // DOCUMENT MIDDLEWARE: runs before .save() and .create(). Not runs for .update()
 // projectSchema.pre('save', function (next) {
 //   this.slug = slugify(this.name, {
