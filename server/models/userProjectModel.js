@@ -15,13 +15,14 @@ const userProjectSchema = new mongoose.Schema(
     },
     dateParticipated: {
       type: Date,
-      default: Date.now,
+      default: Date.now(),
     },
     amount: {
       type: Number,
     },
     contributionAmount: {
       type: Number,
+      set: (val) => Math.round(val * 100) / 100, // 4.66666, 466.666, 467, 4.67
     },
     transactionLink: {
       type: String,
@@ -45,7 +46,7 @@ const userProjectSchema = new mongoose.Schema(
   }
 );
 
-userProjectSchema.index({ user: 1, project: 1 }, { unique: true });
+// userProjectSchema.index({ user: 1, project: 1 }, { unique: true });
 
 userProjectSchema.pre(/^find/, function () {
   this.populate({

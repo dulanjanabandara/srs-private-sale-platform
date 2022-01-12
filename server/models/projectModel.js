@@ -26,6 +26,7 @@ const projectSchema = new mongoose.Schema(
     allocation: {
       type: Number,
       required: [true, 'A project must have an allocation'],
+      // set: (val) => Math.round(val * 10) / 10, // 4.66666, 46.6666, 47, 4.7
     },
     fee: {
       type: Number,
