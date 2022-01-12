@@ -83,6 +83,7 @@ exports.getAll = (Model) =>
       .sort()
       .limitFields()
       .paginate();
+    // const doc = await features.query.explain(); // only used for look the outputs in postman
     const doc = await features.query;
 
     res.status(200).json({

@@ -45,6 +45,8 @@ const userProjectSchema = new mongoose.Schema(
   }
 );
 
+userProjectSchema.index({ user: 1, project: 1 }, { unique: true });
+
 userProjectSchema.pre(/^find/, function () {
   this.populate({
     path: 'user',
