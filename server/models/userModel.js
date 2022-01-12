@@ -104,5 +104,12 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
+// Virtual Populate
+// userSchema.virtual('projects', {
+//   ref: 'UserProject',
+//   foreignField: 'user',
+//   localField: '_id',
+// });
+
 const User = mongoose.model('User', userSchema);
 module.exports = User;

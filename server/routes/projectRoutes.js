@@ -1,6 +1,7 @@
 const express = require('express');
 const projectController = require('../controllers/projectController');
 const authController = require('../controllers/authController');
+const userProjectRouter = require('./userProjectRoutes');
 
 const router = express.Router();
 
@@ -8,10 +9,20 @@ const router = express.Router();
 // router.param('id', projectController.checkID);
 // Middleware to check the request body
 
+// POST /tours/3456shlsgp/reviews
+// GET /tours/3456shlsgp/reviews
+
+router.use('/:projectId/join-project', userProjectRouter); // User join for a project after logged in
+router.use('/:projectId/view-users', userProjectRouter); // Displays all the users of that project
+
 router
   .route('/')
   .get(authController.protect, projectController.getAllProjects)
-  .post(projectController.createProject);
+  .post(
+    authController.protect,
+    authController.restrictTo('admin'),
+    projectController.createProject
+  );
 
 router
   .route('/:id')

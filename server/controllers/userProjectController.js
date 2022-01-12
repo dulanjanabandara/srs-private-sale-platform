@@ -4,7 +4,10 @@ const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
 
 exports.getAllUserProjects = catchAsync(async (req, res, next) => {
-  const userProjects = await UserProject.find();
+  let filter = {};
+  if (req.params.projectId) filter = { project: req.params.projectId };
+
+  const userProjects = await UserProject.find(filter);
 
   res.status(200).json({
     status: 'success',
@@ -16,6 +19,10 @@ exports.getAllUserProjects = catchAsync(async (req, res, next) => {
 });
 
 exports.createUserProject = catchAsync(async (req, res, next) => {
+  // Allow nested routes
+  if (!req.body.project) req.body.project = req.params.projectId;
+  if (!req.body.user) req.body.user = req.user.id;
+
   const newUserProject = await UserProject.create(req.body);
 
   res.status(201).json({
