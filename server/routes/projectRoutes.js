@@ -17,7 +17,7 @@ router.use('/:projectId/view-users', userProjectRouter); // Displays all the use
 
 router
   .route('/')
-  .get(authController.protect, projectController.getAllProjects)
+  .get(projectController.getAllProjects)
   .post(
     authController.protect,
     authController.restrictTo('admin'),
@@ -27,12 +27,11 @@ router
 router
   .route('/:id')
   .get(projectController.getProject)
-  .patch(projectController.updateProject)
-  // .patch(
-  //   authController.protect,
-  //   authController.restrictTo('admin'),
-  //   projectController.deleteProject
-  // );
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    projectController.updateProject
+  )
   .delete(
     authController.protect,
     authController.restrictTo('admin'),

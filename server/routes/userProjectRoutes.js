@@ -4,17 +4,27 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-// POST /project/hfhlauoeag46/user
-// GET /project/hfhlauoeag46/user
-// POST /reviews
+router.use(authController.protect);
 
 router
   .route('/')
   .get(userProjectController.getAllUserProjects)
   .post(
-    authController.protect,
     authController.restrictTo('user', 'admin'),
+    userProjectController.setUserProjectIds,
     userProjectController.createUserProject
+  );
+
+router
+  .route('/:id')
+  .get(userProjectController.getUserProject)
+  .patch(
+    authController.restrictTo('user', 'admin'),
+    userProjectController.updateUserProject
+  )
+  .delete(
+    authController.restrictTo('user', 'admin'),
+    userProjectController.deleteUserProject
   );
 
 module.exports = router;

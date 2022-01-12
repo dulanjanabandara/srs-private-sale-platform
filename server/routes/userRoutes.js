@@ -1,29 +1,35 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+// const factory = require('./handlerFactory');
+// const userProjectRouter = require('./userProjectRoutes');
 
 const router = express.Router();
 
+// router.use('/:userId/view-projects', userProjectRouter); // Displays all the users of that project.
+
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatePassword
-);
+// The routes after this middleware are protected!
+router.use(authController.protect);
 
-router.patch('/updateMe', authController.protect, userController.updateMe);
-router.delete('/deleteMe', authController.protect, userController.deleteMe);
+router.patch('/updateMyPassword', authController.updatePassword);
+router.get('/me', userController.getMe, userController.getUser);
+router.patch('/updateMe', userController.updateMe);
+router.delete('/deleteMe', userController.deleteMe);
 
-// Keep these routes for some uses of the System Administrator
+// The routes after this middleware are not only protected but also require an admin user.
+router.use(authController.restrictTo('admin'));
+
+// Keep these routes for some uses of the System Administrator.
 router
   .route('/')
   .get(userController.getAllUsers)
   .post(userController.createUser);
+
 router
   .route('/:id')
   .get(userController.getUser)
