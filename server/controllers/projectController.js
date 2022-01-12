@@ -5,7 +5,12 @@ const AppError = require('../utils/appError');
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
   // EXECUTE QUERY
-  const features = new APIFeatures(Project.find(), req.query)
+  const features = new APIFeatures(
+    Project.find({
+      active: true,
+    }),
+    req.query
+  )
     .filter()
     .sort()
     .limitFields()
@@ -20,7 +25,9 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
 });
 
 exports.getProject = catchAsync(async (req, res, next) => {
-  const project = await Project.findById(req.params.id).populate('users');
+  const project = await Project.findById(req.params.id)
+    .where({ active: true })
+    .populate('users');
 
   if (!project) {
     return next(new AppError('No project found with that ID', 404));
