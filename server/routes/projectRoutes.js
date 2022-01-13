@@ -30,6 +30,9 @@ router
   .patch(
     authController.protect,
     authController.restrictTo('admin'),
+    projectController.uploadProjectFiles,
+    projectController.resizeProjectPhoto,
+    // projectController.uploadPitchDeck,
     projectController.updateProject
   )
   .delete(

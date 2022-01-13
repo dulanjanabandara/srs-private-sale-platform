@@ -13,8 +13,8 @@ const projectSchema = new mongoose.Schema(
     description: { type: String, trim: true },
     websiteLink: { type: String },
     twitterLink: { type: String },
-    pitchDeckLink: { type: String },
-    documentsLink: { type: String },
+    pitchDeck: { type: String },
+    documents: [String],
     // blockchain: {
     //   type: String,
     //   required: [true, 'A project must have a blockchain'],
@@ -71,7 +71,7 @@ const projectSchema = new mongoose.Schema(
       },
     },
     vestingSchedule: { type: String, trim: true },
-    coverImage: {
+    coverPhoto: {
       type: String,
       // required: [true, 'A project must have a cover image']
     },
