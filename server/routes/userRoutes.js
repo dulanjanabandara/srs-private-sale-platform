@@ -1,7 +1,7 @@
 const express = require('express');
-const multer = require('multer');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+// const multer = require('multer');
 // const factory = require('./handlerFactory');
 // const userProjectRouter = require('./userProjectRoutes');
 
@@ -20,7 +20,11 @@ router.use(authController.protect);
 
 router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', userController.getMe, userController.getUser);
-router.patch('/updateMe', userController.updateMe);
+router.patch(
+  '/updateMe',
+  userController.uploadUserPhoto,
+  userController.updateMe
+);
 router.delete('/deleteMe', userController.deleteMe);
 
 // The routes after this middleware are not only protected but also require an admin user.
