@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -6,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -15,7 +17,21 @@ const userProjectRouter = require('./routes/userProjectRoutes');
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  })
+);
+
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   );
+//   next();
+// });
 
 // 1) GLOBAL MIDDLEWARES
 // Set security HTTP headers
@@ -36,6 +52,7 @@ app.use('/api', limiter);
 
 // Body-parser, reading data from body into req.body
 app.use(express.json({ limit: '100kb' }));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Data sanitization agains NoSQL query injection
@@ -62,6 +79,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.use('/', (req, res, next) => {
+//   res.json({ message: 'Hello' });
+// });
 app.use('/api/v1/projects', projectRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/user-projects', userProjectRouter);
