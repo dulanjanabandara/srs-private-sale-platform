@@ -8,12 +8,26 @@ const statusSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    active: { type: Boolean, default: true, select: false },
+    projects: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Project',
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
+
+// statusSchema.pre(/^find/, function () {
+//   this.populate({
+//     path: 'projects',
+//     select: 'name',
+//   });
+// });
 
 statusSchema.index({ allocation: -1, fee: -1 }); // Sort accoring to the ascending order of the allocation
 

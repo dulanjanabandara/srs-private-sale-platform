@@ -83,12 +83,12 @@ const projectSchema = new mongoose.Schema(
 
 projectSchema.index({ allocation: -1, fee: -1 }); // Sort accoring to the ascending order of the allocation
 
-projectSchema.pre(/^find/, function () {
-  this.populate({
-    path: 'status',
-    select: 'name',
-  });
-});
+// projectSchema.pre(/^find/, function () {
+//   this.populate({
+//     path: 'status',
+//     select: 'name',
+//   });
+// });
 
 // Virtual properties - But not relevant for project model, We cannot use virtual properties in a query
 // projectSchema.virtual('contributionAllocation').get(function () {

@@ -52,7 +52,9 @@ exports.createOne = (Model) =>
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
-    if (popOptions) query = query.populate(popOptions); // .where({ active: true }) should be added. previously ---> ,populate('users)
+    if (popOptions) {
+      query = query.populate(popOptions); // .where({ active: true }) should be added. previously ---> ,populate('users)
+    }
     const doc = await query;
 
     if (!doc) {

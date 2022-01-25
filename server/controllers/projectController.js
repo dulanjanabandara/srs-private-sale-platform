@@ -79,7 +79,8 @@ exports.uploadPitchDeck = (req, res, next) => {
 // exports.uploadDocuments = catchAsync(async (req, res, next) => {});
 
 exports.getAllProjects = factory.getAll(Project);
-exports.getProject = factory.getOne(Project, { path: 'users' });
+// exports.getProject = factory.getOne(Project, { path: 'users' });
+exports.getProject = factory.getOne(Project, { path: 'status' });
 exports.createProject = factory.createOne(Project);
 exports.updateProject = factory.updateOne(Project);
 exports.deleteProject = factory.deleteOne(Project);
