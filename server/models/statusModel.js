@@ -1,0 +1,22 @@
+const mongoose = require('mongoose');
+
+const statusSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'A status must have a name'],
+      trim: true,
+      unique: true,
+    },
+  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+statusSchema.index({ allocation: -1, fee: -1 }); // Sort accoring to the ascending order of the allocation
+
+const Status = mongoose.model('Status', statusSchema);
+
+module.exports = Status;

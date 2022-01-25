@@ -55,20 +55,9 @@ const projectSchema = new mongoose.Schema(
     noOfTotalToken: { type: Number },
     noOfDistributedTokens: { type: Number },
     status: {
-      type: String,
+      type: mongoose.Schema.ObjectId,
+      ref: 'Status',
       required: [true, 'A project must have a status'],
-      enum: {
-        values: [
-          'upcoming',
-          'in-progress',
-          'distribution pending',
-          'partially distributed',
-          'distribution completed',
-          'refunded',
-          'cancelled',
-        ],
-        message: 'Select a valid status',
-      },
     },
     vestingSchedule: { type: String, trim: true },
     coverPhoto: {
@@ -93,6 +82,13 @@ const projectSchema = new mongoose.Schema(
 );
 
 projectSchema.index({ allocation: -1, fee: -1 }); // Sort accoring to the ascending order of the allocation
+
+projectSchema.pre(/^find/, function () {
+  this.populate({
+    path: 'status',
+    select: 'name',
+  });
+});
 
 // Virtual properties - But not relevant for project model, We cannot use virtual properties in a query
 // projectSchema.virtual('contributionAllocation').get(function () {
