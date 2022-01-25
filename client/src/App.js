@@ -1,18 +1,30 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
+import HomePage from "./components/pages/homePage/homePage";
+import Dashboard from "./components/pages/dashboard/dashboard";
+import Header from "./components/common/header/header";
+import Contact from "./components/pages/contact/contact";
 
 import "./App.css";
 
-function App() {
-  return (
-    <div>
-      {/* <Navbar /> */}
-      <div className="content">
-        <Route path="/login" component={LoginForm} />
+class App extends Component {
+  state = {};
+  render() {
+    return (
+      <div>
+        <Header />
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/login" component={LoginForm} />
+          <Route path="/register" component={RegisterForm} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/contact" component={Contact} />
+        </Switch>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;

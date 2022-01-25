@@ -67,9 +67,6 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // EXECUTE QUERY
-
-    // To allow for nested GET reviews on tour (hack)
     let filter = {};
     if (req.params.projectId) filter = { project: req.params.projectId };
 

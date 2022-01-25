@@ -73,6 +73,7 @@ const projectSchema = new mongoose.Schema(
     vestingSchedule: { type: String, trim: true },
     coverPhoto: {
       type: String,
+      default: 'projectDefault.jpg',
       // required: [true, 'A project must have a cover image']
     },
     createdAt: { type: Date, default: Date.now(), select: false },

@@ -1,0 +1,15 @@
+.collection-preview {
+  display: grid;
+
+  .title {
+    font-size: 28px;
+    margin-bottom: 25px;
+  }
+
+  .preview {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+}
