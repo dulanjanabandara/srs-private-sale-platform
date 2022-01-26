@@ -1,6 +1,6 @@
 import React from "react";
 import Joi from "joi-browser";
-import Form from "./common/form/form";
+import Form from "../form/form";
 
 import "bootstrap/dist/css/bootstrap.css";
 
