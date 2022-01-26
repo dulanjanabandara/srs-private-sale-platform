@@ -2,6 +2,7 @@ import React from "react";
 import Joi, { errors } from "joi-browser";
 import Form from "../form/form";
 import * as userService from "../../../services/userService.js";
+import auth from "../../../services/authService";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -30,8 +31,11 @@ class RegisterForm extends Form {
   doSubmit = async () => {
     try {
       const response = await userService.register(this.state.data);
-      localStorage.setItem("token", response.headers["x-auth-token"]); // key is token and then the value
-      this.props.history.push("/dashboard");
+      auth.loginWithJwt(response.headers["x-auth-token"]);
+      // localStorage.setItem("token", response.headers["x-auth-token"]); // key is token and then the value
+
+      window.location = "/dashboard";
+      // this.props.history.push("/dashboard");
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
