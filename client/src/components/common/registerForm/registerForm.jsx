@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "../form/form";
+import * as userService from "../../../services/userService.js";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -19,16 +20,15 @@ class RegisterForm extends Form {
   };
 
   schema = {
-    username: Joi.string().required().min(3).label("Username"),
+    username: Joi.string().required().min(8).label("Username"),
     email: Joi.string().required().email().label("Email"),
     discordName: Joi.string().required().label("Discord Name"),
     password: Joi.string().required().min(8).label("Password"),
     passwordConfirm: Joi.string().required().label("Confirm Password"),
   };
 
-  doSubmit = () => {
-    // call the server
-    console.log("Submitted");
+  doSubmit = async () => {
+    await userService.register(this.state.data);
   };
 
   render() {

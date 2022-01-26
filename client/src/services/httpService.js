@@ -19,7 +19,7 @@ axios.interceptors.response.use(null, (error) => {
 
 export default {
   get: axios.get,
-  //   post: axios.post,
+  post: axios.post,
   //   patch: axios.patch,
   //   delete: axios.delete,
 };
