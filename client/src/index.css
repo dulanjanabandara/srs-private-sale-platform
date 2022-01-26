@@ -1,17 +1,18 @@
 body {
   margin: 0;
-  padding: 0 0 0 0;
-  font-family: sans-serif;
+  padding: 20px 0;
+  font-family: "Open Sans Condensed", sans-serif;
 }
 
-.navbar {
-  margin-bottom: 30px;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+body {
+  font-family: "Open Sans Condensed", sans-serif;
+  padding: 20px 60px;
 }
 
 .clickable {
   cursor: pointer;
-}
-
-* {
-  color: balck;
 }

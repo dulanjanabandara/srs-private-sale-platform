@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import HomePage from "./components/pages/homePage/homePage";
@@ -14,6 +16,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <ToastContainer />
         <Header />
         <Switch>
           <Route path="/" exact component={HomePage} />

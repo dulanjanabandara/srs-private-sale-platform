@@ -6,7 +6,7 @@ import "./collectionPreview.scss";
 const CollectionPreview = ({ projects }) => {
   return (
     <div className="collection-preview">
-      <h1 className="title">PROJECTS</h1>
+      {/* <h1 className="title">PROJECTS</h1> */}
       <div className="preview">
         {projects
           // .filter((project, idx) => idx < 4)
