@@ -18,8 +18,17 @@ class LoginForm extends Form {
   };
 
   doSubmit = async () => {
-    const { data } = this.state;
-    await login(data.email, data.password);
+    try {
+      const { data } = this.state;
+      await login(data.email, data.password);
+    } catch (ex) {
+      // console.log(ex.response);
+      if (ex.response && ex.response.status === 401) {
+        const errors = { ...this.state.errors };
+        errors.email = ex.response.data.message;
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
