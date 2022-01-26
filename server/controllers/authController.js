@@ -23,12 +23,10 @@ const createSendToken = (user, statusCode, res) => {
   };
 
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
   res.cookie('jwt', token, cookieOptions);
 
   user.password = undefined; // in order to avoid displaying the password field in the response object
-
-  // // Remove password from output
-  // user.password = undefined;
 
   res.status(statusCode).json({
     status: 'success',
@@ -127,7 +125,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 });
 
 // Only for rendered pages, no errors
-exports.isLoggedIn = catchAsync(async (req, res, next) => {
+exports.isLoggedIn = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
       // 1) Verify token
@@ -155,7 +153,7 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     }
   }
   next();
-});
+};
 
 exports.restrictTo =
   (...roles) =>
