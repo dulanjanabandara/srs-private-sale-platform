@@ -4,7 +4,9 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-router.use(authController.protect, authController.restrictTo('admin'));
+// router.route('/:id/projects').get(statusController.getAllProjects);
+
+// router.use(authController.protect, authController.restrictTo('admin'));
 
 router
   .route('/')
@@ -14,7 +16,15 @@ router
 router
   .route('/:id')
   .get(statusController.getStatus)
-  .patch(statusController.updateStatus)
-  .delete(statusController.deleteStatus);
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    statusController.updateStatus
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin'),
+    statusController.deleteStatus
+  );
 
 module.exports = router;

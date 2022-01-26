@@ -9,12 +9,6 @@ const statusSchema = new mongoose.Schema(
       unique: true,
     },
     active: { type: Boolean, default: true, select: false },
-    projects: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Project',
-      },
-    ],
   },
   {
     toJSON: { virtuals: true },
