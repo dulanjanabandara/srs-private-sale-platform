@@ -47,16 +47,27 @@ class HomePage extends Component {
   };
 
   handleStatusSelect = (status) => {
-    this.setState({ selectedStatus: status });
+    this.setState({ selectedStatus: status, currentPage: 1 });
   };
 
   render() {
     const { length: count } = this.state.projects;
-    const { pageSize, currentPage, projects: allProjects } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      selectedStatus,
+      projects: allProjects,
+    } = this.state;
 
-    if (count === 0) return <p>There are no projects</p>;
+    const filtered =
+      selectedStatus && selectedStatus._id
+        ? allProjects.filter((m) => m.status._id === selectedStatus._id)
+        : allProjects;
 
-    const projects = paginate(allProjects, currentPage, pageSize);
+    const projects = paginate(filtered, currentPage, pageSize);
+
+    // if (count === 0) return <p>There are no projects</p>;
+    <p>Showing {filtered.length} projects </p>;
 
     return (
       <React.Fragment>
@@ -72,7 +83,7 @@ class HomePage extends Component {
           />
           <CollectionPreview projects={projects} />
           <Pagination
-            itemsCount={count}
+            itemsCount={filtered.length}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
