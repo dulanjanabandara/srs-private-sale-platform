@@ -1,9 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "axios";
-// import logger from "./logService";
 import { toast } from "react-toastify";
+import auth from "./authService";
+// import logger from "./logService";
 
-axios.interceptors.response.use(null, (error) => {
+axios.default.headers.common["x-auth-token"] = auth.getJwt();
+
+auth.axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&
     error.response.status >= 400 &&
