@@ -6,13 +6,19 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
 
-const signToken = (id) =>
-  jwt.sign({ id }, process.env.JWT_SECRET, {
+const signToken = (id, username, email, discordName) => {
+  jwt.sign({ id, username, email, discordName }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
+};
 
 const createSendToken = (user, statusCode, res) => {
-  const token = signToken(user._id);
+  const token = signToken(
+    user._id,
+    user.username,
+    user.email,
+    user.discordName
+  );
 
   const cookieOptions = {
     expires: new Date(
@@ -28,14 +34,6 @@ const createSendToken = (user, statusCode, res) => {
 
   user.password = undefined; // in order to avoid displaying the password field in the response object
 
-  // res.status(statusCode).json({
-  //   status: 'success',
-  //   token,
-  //   data: {
-  //     user,
-  //   },
-  // });
-
   res
     .header('x-auth-token', token)
     .header('access-control-expose-headers', 'x-auth-token')
@@ -46,6 +44,14 @@ const createSendToken = (user, statusCode, res) => {
         user,
       },
     });
+
+  // res.status(statusCode).json({
+  //   status: 'success',
+  //   token,
+  //   data: {
+  //     user,
+  //   },
+  // });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
