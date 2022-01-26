@@ -28,13 +28,24 @@ const createSendToken = (user, statusCode, res) => {
 
   user.password = undefined; // in order to avoid displaying the password field in the response object
 
-  res.status(statusCode).json({
-    status: 'success',
-    token,
-    data: {
-      user,
-    },
-  });
+  // res.status(statusCode).json({
+  //   status: 'success',
+  //   token,
+  //   data: {
+  //     user,
+  //   },
+  // });
+
+  res
+    .header('x-auth-token', token)
+    .header('access-control-expose-headers', 'x-auth-token')
+    .status(statusCode)
+    .json({
+      status: 'success',
+      data: {
+        user,
+      },
+    });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {

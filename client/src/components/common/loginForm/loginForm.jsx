@@ -7,10 +7,14 @@ import "bootstrap/dist/css/bootstrap.css";
 // import "./loginForm.css";
 
 class LoginForm extends Form {
-  state = {
-    data: { email: "", password: "" },
-    errors: {},
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: { email: "", password: "" },
+      errors: {},
+    };
+  }
 
   schema = {
     email: Joi.string().required().label("Email"),
@@ -24,9 +28,10 @@ class LoginForm extends Form {
       // Getting the jwtToken
       const loginPromise = await login(data.email, data.password);
       const jwtToken = loginPromise.data.token;
-
       // Storing it in the browser local storage
       localStorage.setItem("token", jwtToken);
+      // Redirecting the user
+      this.props.history.push("/dashboard");
     } catch (ex) {
       if (ex.response && ex.response.status === 401) {
         const errors = { ...this.state.errors };

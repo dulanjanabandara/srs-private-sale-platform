@@ -20,7 +20,7 @@ class RegisterForm extends Form {
   };
 
   schema = {
-    username: Joi.string().required().min(8).label("Username"),
+    username: Joi.string().required().min(4).label("Username"),
     email: Joi.string().required().email().label("Email"),
     discordName: Joi.string().required().label("Discord Name"),
     password: Joi.string().required().min(8).label("Password"),
@@ -29,7 +29,9 @@ class RegisterForm extends Form {
 
   doSubmit = async () => {
     try {
-      await userService.register(this.state.data);
+      const response = await userService.register(this.state.data);
+      localStorage.setItem("token", response.headers["x-auth-token"]); // key is token and then the value
+      this.props.history.push("/dashboard");
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "./dashboard.scss";
+
 class Dashboard extends Component {
   state = {};
   render() {
