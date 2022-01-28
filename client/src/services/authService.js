@@ -5,7 +5,7 @@ import config from "../config.json";
 const apiEndpoint = config.apiUrl + "/users";
 const tokenKey = "token";
 
-http.setJwt(getJwt());
+// http.setJwt(getJwt());
 
 export async function login(email, password) {
   const loginPromise = await http.post(apiEndpoint + "/login", {
@@ -42,5 +42,5 @@ export default {
   logout,
   getCurrentUser,
   loginWithJwt,
-  getJwt,
+  // getJwt,
 };
