@@ -80,7 +80,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'username', 'email');
+  const filteredBody = filterObj(req.body, 'username', 'email', 'discordName');
   if (req.file) filteredBody.profilePhoto = req.file.filename; // adding the profilePhoto to the database
 
   // 3) Update user document

@@ -66,6 +66,7 @@ userSchema.pre('save', function (next) {
   next();
 });
 
+// Middleware to display only the active users. Not active(deleted) users will not be shown because of this middleware.
 userSchema.pre(/^find/, function (next) {
   // this points to the current query
   this.find({ active: { $ne: false } });
@@ -102,7 +103,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
 
-  console.log({ resetToken }, this.passwordResetToken);
+  // console.log({ resetToken }, this.passwordResetToken);
 
   this.passwordResetExpires = Date.now() + 24 * 60 * 60 * 1000;
 

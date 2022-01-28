@@ -33,24 +33,24 @@ const createSendToken = (user, statusCode, res) => {
 
   user.password = undefined; // in order to avoid displaying the password field in the response object
 
-  res
-    .header('x-auth-token', token)
-    .header('access-control-expose-headers', 'x-auth-token')
-    .status(statusCode)
-    .json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      user,
+    },
+  });
 
-  // res.status(statusCode).json({
-  //   status: 'success',
-  //   token,
-  //   data: {
-  //     user,
-  //   },
-  // });
+  // res
+  //   .header('x-auth-token', token)
+  //   .header('access-control-expose-headers', 'x-auth-token')
+  //   .status(statusCode)
+  //   .json({
+  //     status: 'success',
+  //     data: {
+  //       user,
+  //     },
+  //   });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -86,9 +86,10 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
     // loggedout is just a dummy text. we send it instead of the token
-    expires: new Date(Date.now() + 10 * 1000),
+    expires: new Date(Date.now() + 8 * 1000),
     httpOnly: true,
   });
+
   res.status(200).json({
     status: 'success',
   });
@@ -117,6 +118,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
+
   if (!currentUser) {
     return next(
       new AppError(
@@ -135,7 +137,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
-  // res.locals.user = currentUser;
+  res.locals.user = currentUser;
 
   next();
 });
@@ -162,7 +164,7 @@ exports.isLoggedIn = async (req, res, next) => {
       }
 
       //  THERE IS A LOGGED IN USER
-      res.locals.user = currentUser;
+      res.locals.user = currentUser; // only for the template engine
       return next();
     } catch (err) {
       return next();
