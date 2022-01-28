@@ -5,6 +5,7 @@ import config from "../../../config.json";
 import "react-toastify/dist/ReactToastify.css";
 import CollectionPreview from "../../common/collectionPreview/collectionPreview";
 import Pagination from "../../common/pagination/pagination";
+import SearchBox from "../../common/searchBox/searchBox";
 import { paginate } from "../../../utils/paginate";
 import ListGroup from "../../common/listGroup/listGroup";
 import { getStatuses } from "../../../services/statusService";
@@ -19,27 +20,20 @@ class HomePage extends Component {
       statuses: [],
       currentPage: 1,
       pageSize: 4, // Needs to change according to the backend settings
+      searchQuery: "",
       selectedStatus: null,
     };
   }
 
-  async populateProjects() {
+  async componentDidMount() {
     const { data: dataProject } = await getProjects();
     const { data: projects } = dataProject;
-    this.setState({ projects });
-  }
 
-  async populateStatuses() {
     const { data: dataStatus } = await getStatuses();
     const { data: allStatuses } = dataStatus;
     const statuses = [{ _id: "", name: "All" }, ...allStatuses];
-    this.setState({ statuses });
-  }
 
-  async componentDidMount() {
-    await this.populateProjects();
-    await this.populateStatuses();
-    // this.setState({ projects, statuses });
+    this.setState({ projects, statuses });
   }
 
   handlePageChange = (page) => {
@@ -47,43 +41,59 @@ class HomePage extends Component {
   };
 
   handleStatusSelect = (status) => {
-    this.setState({ selectedStatus: status, currentPage: 1 });
+    this.setState({ selectedStatus: status, searchQuery: "", currentPage: 1 });
   };
 
-  render() {
-    const { length: count } = this.state.projects;
+  handleSearch = (query) => {
+    this.setState({ searchQuery: query, selectedStatus: null, currentPage: 1 });
+  };
+
+  getPagedData = () => {
     const {
       pageSize,
       currentPage,
       selectedStatus,
+      searchQuery,
       projects: allProjects,
-    } = this.state;
+    } = this.status;
 
-    const filtered =
-      selectedStatus && selectedStatus._id
-        ? allProjects.filter((m) => m.status._id === selectedStatus._id)
-        : allProjects;
+    let filtered = allProjects;
+    if (searchQuery)
+      filtered = allProjects.filter((p) =>
+        p.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    else if (selectedStatus && selectedStatus._id)
+      filtered = allProjects.filter((p) => p.genre._id === selectedStatus._id);
 
-    const projects = paginate(filtered, currentPage, pageSize);
+    const projects = paginate(currentPage, pageSize);
 
-    // if (count === 0) return <p>There are no projects</p>;
-    <p>Showing {filtered.length} projects </p>;
+    return { totalCount: filtered.length, data: projects };
+  };
+
+  render() {
+    const { length: count } = this.state.projects;
+    const { pageSize, currentPage, searchQuery } = this.state;
+
+    if (count === 0) return <p>There are no projects</p>;
+
+    const { totalCount, data: projects } = this.getPagedData;
 
     return (
       <React.Fragment>
         <ToastContainer />
         <div className="shop-page">
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          <p>Showing {totalCount} movies in the database.</p>
           <ListGroup
             items={this.state.statuses}
             selectedStatus={this.state.selectedStatus}
             onItemSelect={this.handleStatusSelect}
-
             // textProperty="name"
             // valueProperty="_id"
           />
           <CollectionPreview projects={projects} />
           <Pagination
-            itemsCount={filtered.length}
+            itemsCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
