@@ -12,26 +12,24 @@ import { getStatuses } from "../../../services/statusService";
 import { getProjects } from "../../../services/projectService.js";
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      projects: [],
-      statuses: [],
-      currentPage: 1,
-      pageSize: 4, // Needs to change according to the backend settings
-      searchQuery: "",
-      selectedStatus: null,
-    };
-  }
+  state = {
+    projects: [],
+    statuses: [],
+    currentPage: 1,
+    pageSize: 4, // Needs to change according to the backend settings
+    searchQuery: "",
+    selectedStatus: null,
+  };
 
   async componentDidMount() {
     const { data: dataProject } = await getProjects();
     const { data: projects } = dataProject;
+    console.log(projects);
 
     const { data: dataStatus } = await getStatuses();
     const { data: allStatuses } = dataStatus;
     const statuses = [{ _id: "", name: "All" }, ...allStatuses];
+    console.log(statuses);
 
     this.setState({ projects, statuses });
   }
@@ -55,17 +53,17 @@ class HomePage extends Component {
       selectedStatus,
       searchQuery,
       projects: allProjects,
-    } = this.status;
+    } = this.state;
 
     let filtered = allProjects;
     if (searchQuery)
       filtered = allProjects.filter((p) =>
-        p.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+        p.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     else if (selectedStatus && selectedStatus._id)
-      filtered = allProjects.filter((p) => p.genre._id === selectedStatus._id);
+      filtered = allProjects.filter((p) => p.status._id === selectedStatus._id);
 
-    const projects = paginate(currentPage, pageSize);
+    const projects = paginate(filtered, currentPage, pageSize);
 
     return { totalCount: filtered.length, data: projects };
   };
@@ -76,7 +74,7 @@ class HomePage extends Component {
 
     if (count === 0) return <p>There are no projects</p>;
 
-    const { totalCount, data: projects } = this.getPagedData;
+    const { totalCount, data: projects } = this.getPagedData();
 
     return (
       <React.Fragment>

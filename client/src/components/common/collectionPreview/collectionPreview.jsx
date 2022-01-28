@@ -5,16 +5,18 @@ import "./collectionPreview.scss";
 
 const CollectionPreview = ({ projects }) => {
   return (
-    <div className="collection-preview">
-      {/* <h1 className="title">PROJECTS</h1> */}
-      <div className="preview">
-        {projects
-          // .filter((project, idx) => idx < 4)
-          .map(({ _id, ...otherProjectProps }) => (
-            <CollectionItem key={_id} {...otherProjectProps} />
-          ))}
+    <React.Fragment>
+      <div className="collection-preview">
+        {/* <h1 className="title">PROJECTS</h1> */}
+        <div className="preview">
+          {projects
+            // .filter((project, idx) => idx < 4)
+            .map(({ _id, ...otherProjectProps }) => (
+              <CollectionItem key={_id} {...otherProjectProps} />
+            ))}
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
