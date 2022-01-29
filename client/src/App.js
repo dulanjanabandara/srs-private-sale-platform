@@ -10,6 +10,7 @@ import LoginForm from "./components/common/loginForm/loginForm";
 import RegisterForm from "./components/common/registerForm/registerForm";
 import Logout from "./components/common/logout/logout";
 import NotFound from "./components/pages/notFoundPage/notFoundPage";
+import ProjectDetails from "./components/pages/projectDetailsPage/projectDetails";
 import auth from "./services/authService";
 
 // import LoginPage from "./components/pages/loginPage/loginPage";
@@ -30,13 +31,15 @@ class App extends Component {
         <ToastContainer />
         <Header currentUser={this.state.currentUser} />
         <Switch>
-          <Route path="/" exact component={HomePage} />
+          <Route path="/projects/:id" component={ProjectDetails} />
           <Route path="/login" component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
           <Route path="/logout" component={Logout} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/contact" component={Contact} />
           <Route path="/not-found" component={NotFound} />
+          <Route path="/" exact component={HomePage} />
+          <Redirect to="/not-found" />
         </Switch>
       </div>
     );

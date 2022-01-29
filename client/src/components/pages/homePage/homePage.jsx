@@ -24,12 +24,12 @@ class HomePage extends Component {
   async componentDidMount() {
     const { data: dataProject } = await getProjects();
     const { data: projects } = dataProject;
-    console.log(projects);
+    // console.log(projects);
 
     const { data: dataStatus } = await getStatuses();
     const { data: allStatuses } = dataStatus;
     const statuses = [{ _id: "", name: "All" }, ...allStatuses];
-    console.log(statuses);
+    // console.log(statuses);
 
     this.setState({ projects, statuses });
   }

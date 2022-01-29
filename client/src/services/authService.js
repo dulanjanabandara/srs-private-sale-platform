@@ -1,18 +1,19 @@
-import jwtDecode from "jwt-decode";
+/* eslint-disable import/no-anonymous-default-export */
 import http from "./httpService";
+import jwtDecode from "jwt-decode";
 import config from "../config.json";
 
 const apiEndpoint = config.apiUrl + "/users";
 const tokenKey = "token";
 
-// http.setJwt(getJwt());
+http.setJwt(getJwt());
 
 export async function login(email, password) {
   const loginPromise = await http.post(apiEndpoint + "/login", {
     email,
     password,
   });
-  const jwt = loginPromise.headers["x-auth-token"];
+  const jwt = loginPromise.data.token;
   localStorage.setItem(tokenKey, jwt);
 }
 
@@ -42,5 +43,5 @@ export default {
   logout,
   getCurrentUser,
   loginWithJwt,
-  // getJwt,
+  getJwt,
 };

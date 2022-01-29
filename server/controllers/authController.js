@@ -29,7 +29,7 @@ const createSendToken = (user, statusCode, res) => {
 
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-  res.cookie('jwt', token, cookieOptions);
+  // res.cookie('jwt', token, cookieOptions);
 
   user.password = undefined; // in order to avoid displaying the password field in the response object
 
@@ -59,7 +59,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   if (newUser) {
     return res
       .status(400)
-      .json({ status: 'Error', message: 'User already exist!' });
+      .json({ status: 'Error', message: 'User already registered!' });
   }
 
   newUser = await User.create({

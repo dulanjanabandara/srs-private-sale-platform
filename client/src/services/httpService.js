@@ -17,14 +17,15 @@ axios.interceptors.response.use(null, (error) => {
   return Promise.reject(error);
 });
 
-// function setJwt(jwt) {
-//   axios.default.headers.common["x-auth-token"] = jwt;
-// }
+// Whenever sending an http request to the server by axios, following header will be included in the request;
+function setJwt(jwt) {
+  axios.defaults.headers.common["Authorization"] = "Bearer" + jwt;
+}
 
 export default {
   get: axios.get,
   post: axios.post,
   //   patch: axios.patch,
   //   delete: axios.delete,
-  // setJwt,
+  setJwt,
 };
