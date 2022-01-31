@@ -3,15 +3,18 @@ import CollectionItem from "../collectionItem/collectionItem";
 
 import "./collectionPreview.scss";
 
-const CollectionPreview = ({ projects }) => {
+const CollectionPreview = (props) => {
   return (
     <div className="collection-preview">
-      {/* <h1 className="title">PROJECTS</h1> */}
       <div className="preview">
-        {projects
+        {props.projects
           // .filter((project, idx) => idx < 4)
-          .map((p) => (
-            <CollectionItem key={p._id} {...p} />
+          .map((project) => (
+            <CollectionItem
+              key={project._id}
+              {...project}
+              onProjectSelect={props.onProjectSelect}
+            />
           ))}
       </div>
     </div>

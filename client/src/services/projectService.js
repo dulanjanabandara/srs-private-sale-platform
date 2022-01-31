@@ -3,6 +3,14 @@ import config from "../config.json";
 
 const apiEndpoint = config.apiUrl + "/projects";
 
+function projectUrl(projectId) {
+  return `${apiEndpoint}/${projectId}`;
+}
+
 export function getProjects() {
   return http.get(apiEndpoint);
+}
+
+export function getProject(projectId) {
+  return http.get(projectUrl(projectId));
 }

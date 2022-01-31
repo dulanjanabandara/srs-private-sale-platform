@@ -10,7 +10,7 @@ import LoginForm from "./components/common/loginForm/loginForm";
 import RegisterForm from "./components/common/registerForm/registerForm";
 import Logout from "./components/common/logout/logout";
 import NotFound from "./components/pages/notFoundPage/notFoundPage";
-import ProjectDetails from "./components/pages/projectDetailsPage/projectDetails";
+import ProjectDetails from "./components/pages/projectDetailsPage/projectDetailsPage";
 import auth from "./services/authService";
 
 // import LoginPage from "./components/pages/loginPage/loginPage";

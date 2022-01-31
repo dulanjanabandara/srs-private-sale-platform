@@ -6,6 +6,7 @@ class LoginPage extends Component {
     super(props);
     this.state = {};
   }
+
   render() {
     return (
       <div className="sign-in-and-sign-up">

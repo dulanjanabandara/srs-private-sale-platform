@@ -80,8 +80,8 @@ exports.getAll = (Model) =>
     )
       .filter()
       .sort()
-      .limitFields()
-      .paginate();
+      .limitFields();
+    // .paginate();
     // const doc = await features.query.explain(); // only used for look the outputs in postman
     const doc = await features.query;
 
