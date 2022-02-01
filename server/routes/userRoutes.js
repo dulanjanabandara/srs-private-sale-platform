@@ -18,7 +18,7 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 router.use(authController.protect);
 
 // Displays all the users of that project.
-router.get('/:userId/view-projects', userController.getMyTours);
+router.get('/:userId/view-projects', userController.getMyProjects);
 
 router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', userController.getMe, userController.getUser);

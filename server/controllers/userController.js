@@ -115,7 +115,7 @@ exports.createUser = (req, res) => {
   });
 };
 
-exports.getMyTours = catchAsync(async (req, res, next) => {
+exports.getMyProjects = catchAsync(async (req, res, next) => {
   // 1) Find all projects for currently logged in user
   const userProjects = await UserProject.find({ user: req.user.id });
 
