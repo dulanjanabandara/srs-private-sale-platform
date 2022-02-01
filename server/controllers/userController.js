@@ -1,6 +1,8 @@
 const multer = require('multer');
 const sharp = require('sharp');
 const User = require('../models/userModel');
+const Project = require('../models/projectModel');
+const UserProject = require('../models/userProjectModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
@@ -112,6 +114,18 @@ exports.createUser = (req, res) => {
     message: 'This route is not yet defined! Please use /signup instead',
   });
 };
+
+exports.getMyTours = catchAsync(async (req, res, next) => {
+  console.log(req.user.id);
+  // 1) Find all projects for currently logged in user
+  const userProjects = await UserProject.find({ user: req.user.id });
+
+  // 2) Find projects with the returned IDs.
+  const projectIDs = userProjects.map((el) => el.project);
+  const projects = await Project.find({ _id: { $in: projectIDs } });
+
+  res.status(200).json({ status: 'success', data: projects });
+});
 
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);

@@ -7,8 +7,6 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-// router.use('/:userId/view-projects', userProjectRouter); // Displays all the users of that project.
-
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
@@ -18,6 +16,9 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 
 // The routes after this middleware are protected!
 router.use(authController.protect);
+
+// Displays all the users of that project.
+router.use('/:userId/view-projects', userController.getMyTours);
 
 router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', userController.getMe, userController.getUser);
