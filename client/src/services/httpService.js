@@ -19,7 +19,7 @@ axios.interceptors.response.use(null, (error) => {
 
 // Whenever sending an http request to the server by axios, following header will be included in the request;
 function setJwt(jwt) {
-  axios.defaults.headers.common["Authorization"] = "Bearer" + jwt;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 }
 
 export default {

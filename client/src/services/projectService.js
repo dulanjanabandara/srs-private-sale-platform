@@ -14,3 +14,16 @@ export function getProjects() {
 export function getProject(projectId) {
   return http.get(projectUrl(projectId));
 }
+
+export async function joinProject(
+  projectId,
+  contributionAmount,
+  contributingWallet,
+  transactionLink
+) {
+  await http.post(`${apiEndpoint}/${projectId}/join-project`, {
+    contributionAmount,
+    contributingWallet,
+    transactionLink,
+  });
+}

@@ -15,7 +15,6 @@ const CollectionItem = ({ ...props }) => {
           <CustomButton
             onClick={() => {
               props.onProjectSelect(props._id);
-              console.log(props);
             }}
           >
             View Project

@@ -24,6 +24,9 @@ const userProjectSchema = new mongoose.Schema(
       type: Number,
       set: (val) => Math.round(val * 100) / 100, // 4.66666, 466.666, 467, 4.67
     },
+    contributingWallet: {
+      type: String,
+    },
     transactionLink: {
       type: String,
       required: [
@@ -37,6 +40,7 @@ const userProjectSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ['in-progress', 'accepted', 'rejected'],
+      default: 'in-progress',
     },
     active: { type: Boolean, default: true, select: false },
   },

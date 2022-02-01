@@ -6,9 +6,11 @@ import "./projectMainDetails.scss";
 class ProjectMainDetails extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isToggleOn: false,
     };
+
     this.handleSecondaryDetailsComponent =
       this.handleSecondaryDetailsComponent.bind(this);
   }
@@ -18,6 +20,8 @@ class ProjectMainDetails extends Component {
   }
 
   render() {
+    const { ...projectProps } = this.props;
+
     return (
       <React.Fragment>
         <div className="main">
@@ -38,12 +42,13 @@ class ProjectMainDetails extends Component {
               </div>
               <button onClick={this.handleSecondaryDetailsComponent}>
                 More Details
+                {/* {console.log({ ...projectProps })} */}
               </button>
             </div>
           </div>
         </div>
         <hr />
-        {this.state.isToggleOn && <ProjectSecondaryDetails />}
+        {this.state.isToggleOn && <ProjectSecondaryDetails {...projectProps} />}
       </React.Fragment>
     );
   }
