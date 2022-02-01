@@ -16,7 +16,7 @@ const statusSchema = new mongoose.Schema(
   }
 );
 
-// statusSchema.pre(/^find/, function () {
+// statusSchema.pre(/^find/, function (next) {
 //   this.populate({
 //     path: 'projects',
 //     select: 'name',

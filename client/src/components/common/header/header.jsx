@@ -22,7 +22,7 @@ const Header = ({ currentUser }) => {
         {currentUser && (
           <React.Fragment>
             {" "}
-            <NavLink className="option" to="/profile">
+            <NavLink className="option" to="/dashboard">
               {currentUser.username.toUpperCase()}
             </NavLink>
             <NavLink className="option" to="/logout">

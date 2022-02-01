@@ -52,7 +52,7 @@ const userProjectSchema = new mongoose.Schema(
 
 // userProjectSchema.index({ user: 1, project: 1 }, { unique: true });
 
-userProjectSchema.pre(/^find/, function () {
+userProjectSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
     select: 'username email discordName profilePhoto',
@@ -61,6 +61,7 @@ userProjectSchema.pre(/^find/, function () {
     select:
       'name websiteLink twitterLink pitchDeckLink documentsLink allocation fee status vestingSchedule',
   });
+  next();
 });
 
 userProjectSchema.methods.calculateContributionAmount = function () {
