@@ -91,6 +91,13 @@ projectSchema.pre(/^find/, function (next) {
   next();
 });
 
+// Middleware to display only the active projects. Not active(deleted) projects will not be shown because of this middleware.
+projectSchema.pre(/^find/, function (next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 // Virtual properties - But not relevant for project model, We cannot use virtual properties in a query
 // projectSchema.virtual('contributionAllocation').get(function () {
 //   return (this.allocation * this.fee) / 100;

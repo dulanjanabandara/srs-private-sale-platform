@@ -16,3 +16,7 @@ export function register(user) {
     // { withCredentials: true }
   );
 }
+
+export function getMyProjects(userId) {
+  return http.get(`${apiEndpoint}/${userId}/view-projects`);
+}

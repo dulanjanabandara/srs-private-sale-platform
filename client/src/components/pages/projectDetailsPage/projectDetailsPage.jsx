@@ -22,8 +22,29 @@ class ProjectDetails extends Component {
     data: {
       _id: "",
       name: "",
-      coverPhoto: "",
       status: "",
+      blockchain: "",
+      description: "",
+      websiteLink: "",
+      twitterLink: "",
+      pitchDeck: "",
+      documents: "",
+      allocation: "",
+      fee: "",
+      allocationPerNft: "",
+      minContributionPerNft: "",
+      maxContributionPerNft: "",
+      maxContributionPerWallet: "",
+      multiTokenDeal: false,
+      token1Price: "",
+      token2Price: "",
+      pricePerToken: "",
+      noOfTotalTokens: "",
+      noOfDistributedTokens: "",
+      vestingSchedule: "",
+      coverPhoto: "",
+      createdAt: "",
+      startDate: "",
     },
   };
 
@@ -50,8 +71,29 @@ class ProjectDetails extends Component {
     return {
       _id: project._id,
       name: project.name,
-      coverPhoto: project.coverPhoto,
       status: project.status.name,
+      blockchain: project.blockchain,
+      description: project.description,
+      websiteLink: project.websiteLink,
+      twitterLink: project.twitterLink,
+      pitchDeck: project.pitchDeck,
+      documents: project.documents,
+      allocation: project.allocation,
+      fee: project.fee,
+      allocationPerNft: project.allocationPerNft,
+      minContributionPerNft: project.minContributionPerNft,
+      maxContributionPerNft: project.maxContributionPerNft,
+      maxContributionPerWallet: project.maxContributionPerWallet,
+      multiTokenDeal: project.multiTokenDeal,
+      token1Price: project.token1Price,
+      token2Price: project.token2Price,
+      pricePerToken: project.pricePerToken,
+      noOfTotalTokens: project.noOfTotalTokens,
+      noOfDistributedTokens: project.noOfDistributedTokens,
+      vestingSchedule: project.vestingSchedule,
+      coverPhoto: project.coverPhoto,
+      createdAt: project.createdAt,
+      startDate: project.startDate,
     };
   }
 
@@ -111,7 +153,7 @@ class ProjectDetails extends Component {
 
     return (
       <div>
-        <h1>Project Details - {this.props.match.params.id} </h1>
+        {/* <h1>Project Details - {this.props.match.params.id} </h1> */}
         <div>
           <ProjectMainDetails project={this.state.data} />
         </div>

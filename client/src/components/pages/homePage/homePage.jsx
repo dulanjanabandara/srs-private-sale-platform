@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
-import http from "../../../services/httpService";
-import config from "../../../config.json";
 import "react-toastify/dist/ReactToastify.css";
 import CollectionPreview from "../../common/collectionPreview/collectionPreview";
 import Pagination from "../../common/pagination/pagination";
@@ -10,6 +8,8 @@ import { paginate } from "../../../utils/paginate";
 import ListGroup from "../../common/listGroup/listGroup";
 import { getStatuses } from "../../../services/statusService";
 import { getProjects } from "../../../services/projectService.js";
+
+import "./homePage.scss";
 
 class HomePage extends Component {
   state = {
@@ -79,23 +79,28 @@ class HomePage extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
-        <div className="shop-page">
+        <div className="home-page">
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <p>Showing {totalCount} movies in the database.</p>
-          <ListGroup
-            items={this.state.statuses}
-            selectedStatus={this.state.selectedStatus}
-            onItemSelect={this.handleStatusSelect}
-            // textProperty="name"
-            // valueProperty="_id"
-          />
-          <CollectionPreview projects={projects} />
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
+          <div className="page-content">
+            <ListGroup
+              items={this.state.statuses}
+              selectedStatus={this.state.selectedStatus}
+              onItemSelect={this.handleStatusSelect}
+              // textProperty="name"
+              // valueProperty="_id"
+            />
+            <div className="page-main-content">
+              <CollectionPreview projects={projects} />
+              <Pagination
+                className="pagination"
+                itemsCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );

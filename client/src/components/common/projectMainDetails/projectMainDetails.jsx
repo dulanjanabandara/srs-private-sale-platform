@@ -38,7 +38,12 @@ class ProjectMainDetails extends Component {
             <div className="project-details">
               <div className="title">
                 <h1>{this.props.project.name}</h1>
-                <h3>{this.props.project.status}</h3>
+                <hr />
+                <h4>Description: {this.props.project.description}</h4>
+                <h4>Allocation{this.props.project.allocation}</h4>
+                <h4>Fee: {this.props.project.fee}</h4>
+                <h4>Start Date: {this.props.project.startDate}</h4>
+                <h4>Status:{this.props.project.status}</h4>
               </div>
               <button onClick={this.handleSecondaryDetailsComponent}>
                 More Details

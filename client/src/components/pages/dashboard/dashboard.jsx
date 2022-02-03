@@ -10,11 +10,7 @@ import "./dashboard.scss";
 
 class Dashboard extends Component {
   state = {
-    statuses: [
-      { _id: 1, name: "My Projects", linkUrl: "" },
-      { _id: 2, name: "Settings", linkUrl: "" },
-      { _id: 3, name: "Delete Account", linkUrl: "" },
-    ],
+    statuses: [],
     selectedStatus: null,
   };
 
@@ -22,20 +18,31 @@ class Dashboard extends Component {
     this.setState({ selectedStatus: status });
   };
 
+  populateStatuses() {
+    const statuses = [
+      { _id: 1, name: "My Projects", linkUrl: "/dashboard/my-projects" },
+      { _id: 2, name: "Settings", linkUrl: "/dashboard/settings" },
+      { _id: 3, name: "Delete Account", linkUrl: "/dashboard/delete-account" },
+    ];
+
+    this.setState({ statuses });
+  }
+
+  componentDidMount() {
+    this.populateStatuses();
+  }
+
   render() {
     return (
-      <div>
-        <h1>Dashboard Page</h1>
-        <SideBar />
-        <Route path="/dashboard/my-projects" component={MyProjects} />
-        <Route path="/dashboard/settings" component={Settings} />
-        <Route path="/dashboard/delete-account" component={DeleteAccount} />
-
-        {/* <ListGroup
+      <div className="dashboard-content">
+        <SideBar
           items={this.state.statuses}
           selectedStatus={this.state.selectedStatus}
           onItemSelect={this.handleStatusSelect}
-        /> */}
+        />
+        <Route path="/dashboard/my-projects" component={MyProjects} />
+        <Route path="/dashboard/settings" component={Settings} />
+        <Route path="/dashboard/delete-account" component={DeleteAccount} />
       </div>
     );
   }
