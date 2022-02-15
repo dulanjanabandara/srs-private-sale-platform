@@ -13,7 +13,7 @@ const CollectionPreview = (props) => {
             <CollectionItem
               key={project._id}
               {...project}
-              onProjectSelect={props.onProjectSelect}
+              onProjectSelect={project.onProjectSelect}
             />
           ))}
       </div>

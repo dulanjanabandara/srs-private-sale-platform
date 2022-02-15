@@ -31,7 +31,8 @@ class RegisterForm extends Form {
   doSubmit = async () => {
     try {
       const response = await userService.register(this.state.data);
-      auth.loginWithJwtW("token", response.data.token);
+      console.log(response);
+      auth.loginWithJwt(response.data.token);
       window.location = "/dashboard";
       // this.props.history.push("/dashboard");
     } catch (ex) {
@@ -53,7 +54,7 @@ class RegisterForm extends Form {
           {this.renderInput("discordName", "Discord Name")}
           {this.renderInput("password", "Password", "password")}
           {this.renderInput("passwordConfirm", "Confirm Password", "password")}
-          {this.renderButton("Login")}
+          {this.renderButton("Register")}
         </form>
       </div>
     );

@@ -1,18 +1,18 @@
 body {
   margin: 0;
-  padding: 20px 0;
+  padding: 20px 20px;
   font-family: "Open Sans Condensed", sans-serif;
 }
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-body {
+} */
+/* body {
   font-family: "Open Sans Condensed", sans-serif;
   padding: 20px 60px;
-}
+} */
 
-.clickable {
+/* .clickable {
   cursor: pointer;
-}
+} */

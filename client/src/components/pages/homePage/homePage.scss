@@ -1,0 +1,18 @@
+// .home-page {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 20px;
+// }
+
+.page-content {
+  display: flex;
+  // gap: 30px;
+  justify-content: space-between;
+}
+
+.page-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}

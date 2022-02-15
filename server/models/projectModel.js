@@ -59,6 +59,11 @@ const projectSchema = new mongoose.Schema(
       ref: 'Status',
       required: [true, 'A project must have a status'],
     },
+    blockchain: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Blockchain',
+      // required: [true, 'A project must have a blockchain'],
+    },
     vestingSchedule: { type: String, trim: true },
     coverPhoto: {
       type: String,
@@ -88,6 +93,13 @@ projectSchema.pre(/^find/, function (next) {
     path: 'status',
     select: 'name',
   });
+  next();
+});
+
+// Middleware to display only the active projects. Not active(deleted) projects will not be shown because of this middleware.
+projectSchema.pre(/^find/, function (next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
   next();
 });
 

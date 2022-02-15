@@ -44,6 +44,11 @@ const userSchema = new mongoose.Schema({
   passwordResetToken: String,
   passwordResetExpires: Date,
   active: { type: Boolean, default: true, select: false },
+  wallet: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Wallet',
+    required: [true, 'A project must have a wallet'],
+  },
 });
 
 userSchema.pre('save', async function (next) {
