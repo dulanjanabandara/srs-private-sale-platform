@@ -59,6 +59,11 @@ const projectSchema = new mongoose.Schema(
       ref: 'Status',
       required: [true, 'A project must have a status'],
     },
+    blockchain: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Blockchain',
+      // required: [true, 'A project must have a blockchain'],
+    },
     vestingSchedule: { type: String, trim: true },
     coverPhoto: {
       type: String,
