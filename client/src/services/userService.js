@@ -17,6 +17,10 @@ export function register(user) {
   );
 }
 
+export function getMe() {
+  return http.get(`${apiEndpoint}/me`);
+}
+
 export function getMyProjects(userId) {
   return http.get(`${apiEndpoint}/${userId}/view-projects`);
 }
